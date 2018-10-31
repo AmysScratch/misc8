@@ -43,7 +43,17 @@ func Main() {
 		}
 		Amys = append(Amys, amy)
 	}
-	LexerMain()
+	for _, bot := range Bots {
+		bot.Session.AddHandler(onMessageCreate)
+		bot.Session.AddHandler(onMessageDelete)
+		bot.Session.AddHandler(onMessageReactionAdd)
+		bot.Session.AddHandler(onMessageReactionRemove)
+		bot.Session.AddHandler(onMessageUpdate)
+		bot.Session.AddHandler(onGuildMemberAdd)
+		bot.Session.AddHandler(onGuildMemberRemove)
+		bot.Session.AddHandler(onGuildMemberUpdate)
+		bot.Session.AddHandler(onVoiceStateUpdate)
+	}
 }
 
 func login(line string) *Bot {
