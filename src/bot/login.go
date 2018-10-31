@@ -17,6 +17,10 @@ struct Bot {
 
 var Bots []*Bot
 var DB *sql.DB
+var AmyIDs = []string{
+	"413206608" + "839966721",
+}
+var Amys []*discordgo.User
 
 func Main() {
 	bcfgs, err := ioutil.ReadFile("/usr/local/Tokens/Sa" + "sa8.dat")
@@ -26,14 +30,25 @@ func Main() {
 	if DB, err := sql.Open("sqlite3", "/usr/local/Sa" + "sa8/Assets/Sa" + "sa8.db"); err != nil {
 		panic(err)
 	}
-	for cfg := range strings.Split(string(bcfgs), "\n") {
+	for _, cfg := range strings.Split(string(bcfgs), "\n") {
 		Bots = append(Bots, login(cfg))
 	}
+	if len(Bots) < 1 {
+		panic("No bots")
+	}
+	for _, amyID := range AmyIDs {
+		amy, err := Bots[0].Session.User(amyID)
+		if err != nil {
+			panic("Could not resolve Amy")
+		}
+		Amys = append(Amys, amy)
+	}
+	LexerMain()
 }
 
 func login(line string) *Bot {
 	bot := new(Bot)
-	for kvws := range strings.Split(line, ";") {
+	for _, kvws := range strings.Split(line, ";") {
 		kv := strings.Split(strings.TrimSpace(kvws), "=")
 		if len(kv) != 2 {
 			return nil
