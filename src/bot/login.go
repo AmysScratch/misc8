@@ -10,7 +10,9 @@ import (
 )
 
 struct Bot {
-	Session *discordgo.Session
+	Session  *discordgo.Session
+	User     *discordgo.User
+	OwnerIDs []string
 }
 
 var Bots []*Bot
@@ -37,6 +39,8 @@ func login(line string) *Bot {
 			return nil
 		}
 		switch strings.ToLower(kv[0]) {
+		case "owner":
+			bot.Owners = append(bot.OwnerIDs, kv[1])
 		case "token":
 			session, err := discordgo.New("Bot " + kv[1])
 			if err != nil {
@@ -46,6 +50,11 @@ func login(line string) *Bot {
 		}
 	}
 	if bot.Session != nil {
+		user, err := bot.Session.User("@me")
+		if err != nil {
+			panic("Could not resolve @me")
+		}
+		bot.User = user
 		return bot
 	}
 	return nil
