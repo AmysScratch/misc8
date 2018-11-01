@@ -16,6 +16,7 @@ type Com struct {
 	Nick     string
 	Username string
 	BestName string
+	Tail     string
 	Channel  *discordgo.Channel
 	Member   *discordgo.Member
 	User     *discordgo.Member
@@ -33,6 +34,7 @@ func NewCom(s *discordgo.Session, message *discordgo.Message, payl string) (com 
 
 func (com *Com) Init(s *discordgo.Session, message *discordgo.Message, payl string) error {
 	var err error
+	com.Tail = payl
 	if com.Channel, err = LuChannel(s, message.ChannelID); err != nil {
 		return
 	}
