@@ -1,5 +1,9 @@
 package bot
 
+import (
+	"github.com/bwmarrin/discordgo"
+)
+
 func onGuildMemberAdd(s *discordgo.Session, gma *discordgo.GuildMemberAdd) {
 }
 
