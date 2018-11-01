@@ -123,7 +123,7 @@ func login(line string) *Bot {
 		}
 		switch strings.ToLower(kv[0]) {
 		case "owner":
-			bot.Owners = append(bot.OwnerIDs, kv[1])
+			bot.OwnerIDs = append(bot.OwnerIDs, kv[1])
 		case "token":
 			session, err := discordgo.New("Bot " + kv[1])
 			if err != nil {
@@ -146,7 +146,7 @@ func login(line string) *Bot {
 func cyclePlayingStatus() {
 	var servers string
 	for {
-		servers = strconv.Format(int64(len(session.State.Guilds)), 10) + " Servers"
+		servers = strconv.FormatInt(int64(len(session.State.Guilds)), 10) + " Servers"
 		now := time.Now()
 		month := int(now.Month()) - 1
 
