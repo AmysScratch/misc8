@@ -12,14 +12,22 @@ const (
 	Com_,
 )
 
+var PRG *rand.Rand
+
+func init() {
+	PRG = rand.New(rand.NewSource(time.Now().UnixNano()))
+}
+
 type Com struct {
 	Nick     string
 	Username string
 	BestName string
 	Tail     string
+	Session  *discordgo.Session
+	Message  *discordgo.Message
 	Channel  *discordgo.Channel
 	Member   *discordgo.Member
-	User     *discordgo.Member
+	User     *discordgo.User
 	UID64    int64
 	GID64    int64
 	Entropy  uint64
@@ -34,6 +42,8 @@ func NewCom(s *discordgo.Session, message *discordgo.Message, payl string) (com 
 
 func (com *Com) Init(s *discordgo.Session, message *discordgo.Message, payl string) error {
 	var err error
+	com.Session = s
+	com.Message = message
 	com.Tail = payl
 	if com.Channel, err = LuChannel(s, message.ChannelID); err != nil {
 		return
@@ -63,8 +73,5 @@ func (com *Com) Init(s *discordgo.Session, message *discordgo.Message, payl stri
 	return nil
 }
 
-var PRG *rand.Rand
-
-func init() {
-	PRG = rand.New(rand.NewSource(time.Now().UnixNano()))
+func (com *Com) Lex() error {
 }
