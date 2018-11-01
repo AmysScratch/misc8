@@ -63,7 +63,7 @@ var PlayingMonth = [12][]string{
 	},
 }
 
-struct Bot {
+type Bot struct {
 	Session  *discordgo.Session
 	User     *discordgo.User
 	OwnerIDs []string
