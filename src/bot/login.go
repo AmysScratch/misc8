@@ -81,7 +81,7 @@ func Main() {
 	if err != nil {
 		panic(err)
 	}
-	db, err := sql.Open("sqlite3", "/usr/local/Sa" + "sa8/Assets/Sa" + "sa8.db"); err != nil {
+	db, err := sql.Open("sqlite3", "/usr/local/Sa" + "sa8/Assets/Sa" + "sa8.db")
 	if err != nil {
 		panic(err)
 	}
