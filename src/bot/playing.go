@@ -1,5 +1,9 @@
 package bot
 
+import (
+	"github.com/bwmarrin/discordgo"
+)
+
 var PlayingFrequent = []string{
 	"Prefix is , (comma)",
 	"Try ,help",
