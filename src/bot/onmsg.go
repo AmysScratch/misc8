@@ -1,13 +1,13 @@
 package bot
 
-func onMessageCreate() {
+func onMessageCreate(s *discordgo.Session, mc *discordgo.MessageCreate) {
 }
-func onMessageDelete() {
+func onMessageDelete(s *discordgo.Session, md *discordgo.MessageDelete) {
 }
-func onMessageReactionAdd() {
+func onMessageReactionAdd(s *discordgo.Session, mra *discordgo.MessageReactionAdd) {
 }
-func onMessageReactionRemove() {
+func onMessageReactionRemove(s *discordgo.Session, mrr *discordgo.MessageReactionRemove) {
 }
-func onMessageUpdate() {
+func onMessageUpdate(s *discordgo.Session, mu *discordgo.MessageUpdate) {
 }
 
