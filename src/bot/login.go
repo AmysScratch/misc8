@@ -1,6 +1,8 @@
 package bot
 
 import (
+	"format" // TODO: DEBUG
+
 	"database/sql"
 	"io/ioutil"
 	"os"
@@ -13,6 +15,8 @@ import (
 	"github.com/bwmarrin/discordgo"
 	_ "github.com/mattn/go-sqlite3"
 )
+
+var _ = format.Println // TODO: DEBUG
 
 var PlayingFrequent = []string{
 	"Prefix is , (comma)",
@@ -147,14 +151,16 @@ func login(line string) *Bot {
 
 func cyclePlayingStatus() {
 	var servers string
+	var guilds int64
 	for {
-		guilds := int64(0)
+		guilds = 0
 		for _, bot := range Bots {
 			guilds += int64(len(bot.Session.State.Guilds))
 		}
 		servers = strconv.FormatInt(guilds, 10) + " Servers"
 		now := time.Now()
 		month := int(now.Month()) - 1
+format.Println(month)
 
 		for _, bot := range Bots {
 			bot.Session.UpdateStatus(0, servers)
