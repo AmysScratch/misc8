@@ -1,13 +1,13 @@
 package bot
 
-func onGuildMemberAdd() {
+func onGuildMemberAdd(s *discordgo.Session, gma *discordgo.GuildMemberAdd) {
 }
 
-func onGuildMemberRemove() {
+func onGuildMemberRemove(s *discordgo.Session, gmr *discordgo.GuildMemberRemove) {
 }
 
-func onGuildMemberUpdate() {
+func onGuildMemberUpdate(s *discordgo.Session, gmu *discordgo.GuildMemberUpdate) {
 }
 
-func onVoiceStateUpdate() {
+func onVoiceStateUpdate(s *discordgo.Session, vsu *discordgo.VoiceStateUpdate) {
 }
