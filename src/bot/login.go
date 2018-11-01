@@ -121,21 +121,44 @@ func Main() {
 }
 
 func login(line string) *Bot {
+	success := false
+	fmt.Println("===")
+	defer func() {
+		if success {
+			fmt.Println("...")
+		} else {
+			fmt.Println("... // failed")
+		}
+	}
 	bot := new(Bot)
 	for _, kvws := range strings.Split(line, ";") {
 		kv := strings.Split(strings.TrimSpace(kvws), "=")
 		if len(kv) != 2 {
-			panic("len(kv) != 2")
+			panic("len(kv) != 2: ``" + kvws + "\u00b4\u00b4")
 		}
+		understood := true
+		isToken := false
 		switch strings.ToLower(kv[0]) {
 		case "owner":
 			bot.OwnerIDs = append(bot.OwnerIDs, kv[1])
 		case "token":
+			isToken = false
 			session, err := discordgo.New("Bot " + kv[1])
 			if err != nil {
 				panic("Failed to log in as Bot " + kv[1] + ".")
 			}
 			bot.Session = session
+		default:
+			understood = false
+		}
+		if understood {
+			showVal := "********"
+			if !isToken {
+				showVal = kv[1]
+			}
+			fmt.Println(kv[0] + "\t\t``" + showVal + "\u00b4\u00b4")
+		} else {
+			fmt.Println("Unknown key ``" + kv[0] + "\u00b4\u00b4")
 		}
 	}
 	if bot.Session == nil {
@@ -146,6 +169,7 @@ func login(line string) *Bot {
 		panic("Could not resolve @me")
 	}
 	bot.User = user
+	success = true
 	return bot
 }
 
