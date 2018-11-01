@@ -146,7 +146,11 @@ func login(line string) *Bot {
 func cyclePlayingStatus() {
 	var servers string
 	for {
-		servers = strconv.FormatInt(int64(len(session.State.Guilds)), 10) + " Servers"
+		guilds := int64(0)
+		for _, bot := range Bots {
+			guilds += int64(len(bot.Session.State.Guilds))
+		}
+		servers = strconv.FormatInt(guilds, 10) + " Servers"
 		now := time.Now()
 		month := int(now.Month()) - 1
 
