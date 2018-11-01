@@ -1,5 +1,9 @@
 package bot
 
+import (
+	"github.com/bwmarrin/discordgo"
+)
+
 func onMessageCreate(s *discordgo.Session, mc *discordgo.MessageCreate) {
 }
 
