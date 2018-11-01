@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"io/ioutil"
 	"os"
-	"signal"
+	"os/signal"
 	"strconv"
 	"strings"
 	"syscall" // TODO: deprecated, use the new unix thingo
