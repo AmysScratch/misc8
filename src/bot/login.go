@@ -3,11 +3,60 @@ package bot
 import (
 	"database/sql"
 	"io/ioutil"
+	"os"
+	"signal"
+	"strconv"
 	"strings"
+	"syscall" // TODO: deprecated, use the new unix thingo
+	"time"
 
 	"github.com/bwmarrin/discordgo"
 	_ "github.com/mattn/go-sqlite3"
 )
+
+var Playing = []string{
+	"Stay Alive Today"
+}
+
+var PlayingMonth = [12][]string{
+	{
+		"it's January",
+	},
+	{
+		"Happy ForeverAlone's Day",
+	},
+	{
+		"it's March",
+	},
+	{
+		"AoT S3p2 coming out",
+	},
+	{
+		"Don't Give Up!",
+	},
+	{
+		"Happy Pride!",
+	},
+	{
+		"it's July",
+	},
+	{
+		"it's August",
+	},
+	{
+		"it's September",
+	},
+	{
+		"Happy Halloween!",
+		"Vote Democrat",
+	},
+	{
+		"Vote Democrat",
+	},
+	{
+		"Happy Holidays!",
+	},
+}
 
 struct Bot {
 	Session  *discordgo.Session
@@ -54,6 +103,10 @@ func Main() {
 		bot.Session.AddHandler(onGuildMemberUpdate)
 		bot.Session.AddHandler(onVoiceStateUpdate)
 	}
+	sc := make(chan os.Signal, 1)
+	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
+	go cyclePlayingStatus()
+	<-sc
 }
 
 func login(line string) *Bot {
@@ -83,4 +136,40 @@ func login(line string) *Bot {
 		return bot
 	}
 	return nil
+}
+
+func cyclePlayingStatus() {
+	var servers string
+	for {
+		servers = strconv.Format(int64(len(session.State.Guilds)), 10) + " Servers"
+		now := time.Now()
+		month := int(now.Month()) - 1
+
+		for _, bot := range Bots {
+			bot.Session.UpdateStatus(0, servers)
+		}
+		time.Sleep(10 * time.Second)
+
+		for _, playing := range PlayingMonth[month] {
+			for _, bot := range Bots {
+				bot.Session.UpdateStatus(0, playing)
+			}
+			time.Sleep(10 * time.Second)
+		}
+
+		for _, playing := range Playing {
+			for _, bot := range Bots {
+				bot.Session.UpdateStatus(0, playing)
+			}
+			time.Sleep(10 * time.Second)
+		}
+
+		for _, playing := range PlayingMonth[month] {
+			for _, bot := range Bots {
+				bot.Session.UpdateStatus(0, playing)
+			}
+			time.Sleep(10 * time.Second)
+		}
+
+	}
 }
