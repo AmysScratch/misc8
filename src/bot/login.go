@@ -94,7 +94,7 @@ func login(line string) *Bot {
 		case "owner":
 			bot.OwnerIDs = append(bot.OwnerIDs, kv[1])
 		case "token":
-			isToken = false
+			isToken = true
 			session, err := discordgo.New("Bot " + kv[1])
 			if err != nil {
 				panic("Failed to log in as Bot " + kv[1] + ".")
