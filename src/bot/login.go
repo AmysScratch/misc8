@@ -39,7 +39,9 @@ func Main() {
 	}
 	DB = db
 	for _, cfg := range strings.Split(string(bcfgs), "\n") {
-		Bots = append(Bots, login(cfg))
+		if len(cfg) > 0 {
+			Bots = append(Bots, login(cfg))
+		}
 	}
 	if len(Bots) < 1 {
 		panic("No bots")
@@ -80,7 +82,11 @@ func login(line string) *Bot {
 	}()
 	bot := new(Bot)
 	for _, kvws := range strings.Split(line, ";") {
-		kv := strings.Split(strings.TrimSpace(kvws), "=")
+		kvtrimmed := strings.TrimSpace(kvws)
+		if len(kvtrimmed) < 1 {
+			continue
+		}
+		kv := strings.Split(kvtrimmed, "=")
 		if len(kv) != 2 {
 			panic("len(kv) != 2: ``" + kvws + "\u00b4\u00b4")
 		}
