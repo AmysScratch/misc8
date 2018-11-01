@@ -6,8 +6,8 @@ import (
 )
 
 var PlayingFrequent = []string{
-	"Prefix is , (comma)",
-	"Try ,help",
+	"Prefix is ,, (2 commas)",
+	"Try ,,help",
 }
 
 var PlayingInfrequent = []string{
