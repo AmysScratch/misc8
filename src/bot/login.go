@@ -1,7 +1,7 @@
 package bot
 
 import (
-	"format" // TODO: DEBUG
+	"fmt" // TODO: DEBUG
 
 	"database/sql"
 	"io/ioutil"
@@ -16,7 +16,7 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-var _ = format.Println // TODO: DEBUG
+var _ = fmt.Println // TODO: DEBUG
 
 var PlayingFrequent = []string{
 	"Prefix is , (comma)",
@@ -160,7 +160,7 @@ func cyclePlayingStatus() {
 		servers = strconv.FormatInt(guilds, 10) + " Servers"
 		now := time.Now()
 		month := int(now.Month()) - 1
-format.Println(month)
+fmt.Println(month)
 
 		for _, bot := range Bots {
 			bot.Session.UpdateStatus(0, servers)
