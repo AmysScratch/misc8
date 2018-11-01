@@ -7,11 +7,6 @@ import (
 	"github.com/bwmarrin/discordgo"
 )
 
-const (
-	Com_SUDO = uint64(1) << iota,
-	Com_,
-)
-
 type Com struct {
 	Nick     string
 	Username string
@@ -25,7 +20,7 @@ type Com struct {
 	UID64    int64
 	GID64    int64
 	Entropy  uint64
-	Flags    uint64
+	Lex      Lex
 }
 
 func NewCom(s *discordgo.Session, message *discordgo.Message, payl string) (com *Com, err error) {
