@@ -48,3 +48,58 @@ var PlayingMonth = [12][]string{
 		"Happy Holidays!",
 	},
 }
+
+func cyclePlayingStatus() {
+	var servers string
+	var guilds int64
+	for {
+		guilds = 0
+		for _, bot := range Bots {
+			guilds += int64(len(bot.Session.State.Guilds))
+		}
+		servers = strconv.FormatInt(guilds, 10) + " Servers"
+		now := time.Now()
+		month := int(now.Month()) - 1
+
+		for _, bot := range Bots {
+			bot.Session.UpdateStatus(0, servers)
+		}
+		time.Sleep(10 * time.Second)
+
+		for _, playing := range PlayingFrequent {
+			for _, bot := range Bots {
+				bot.Session.UpdateStatus(0, playing)
+			}
+			time.Sleep(10 * time.Second)
+		}
+
+		for _, playing := range PlayingMonth[month] {
+			for _, bot := range Bots {
+				bot.Session.UpdateStatus(0, playing)
+			}
+			time.Sleep(10 * time.Second)
+		}
+
+		for _, playing := range PlayingInfrequent {
+			for _, bot := range Bots {
+				bot.Session.UpdateStatus(0, playing)
+			}
+			time.Sleep(10 * time.Second)
+		}
+
+		for _, playing := range PlayingFrequent {
+			for _, bot := range Bots {
+				bot.Session.UpdateStatus(0, playing)
+			}
+			time.Sleep(10 * time.Second)
+		}
+
+		for _, playing := range PlayingMonth[month] {
+			for _, bot := range Bots {
+				bot.Session.UpdateStatus(0, playing)
+			}
+			time.Sleep(10 * time.Second)
+		}
+
+	}
+}
