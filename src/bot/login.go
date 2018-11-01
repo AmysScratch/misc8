@@ -81,21 +81,25 @@ var AmyIDs = []string{
 var Amys []*discordgo.User
 
 func Main() {
+fmt.Println("A")
 	bcfgs, err := ioutil.ReadFile("/usr/local/Tokens/Sa" + "sa8.dat")
 	if err != nil {
 		panic(err)
 	}
+fmt.Println("B")
 	db, err := sql.Open("sqlite3", "/usr/local/Sa" + "sa8/Assets/Sa" + "sa8.db")
 	if err != nil {
 		panic(err)
 	}
 	DB = db
+fmt.Println("C")
 	for _, cfg := range strings.Split(string(bcfgs), "\n") {
 		Bots = append(Bots, login(cfg))
 	}
 	if len(Bots) < 1 {
 		panic("No bots")
 	}
+fmt.Println("D")
 	for _, amyID := range AmyIDs {
 		amy, err := Bots[0].Session.User(amyID)
 		if err != nil {
@@ -103,6 +107,7 @@ func Main() {
 		}
 		Amys = append(Amys, amy)
 	}
+fmt.Println("E")
 	for _, bot := range Bots {
 		bot.Session.AddHandler(onMessageCreate)
 		bot.Session.AddHandler(onMessageDelete)
@@ -114,10 +119,14 @@ func Main() {
 		bot.Session.AddHandler(onGuildMemberUpdate)
 		bot.Session.AddHandler(onVoiceStateUpdate)
 	}
+fmt.Println("F")
 	sc := make(chan os.Signal, 1)
+fmt.Println("G")
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
-	go cyclePlayingStatus()
+fmt.Println("H")
+	//go cyclePlayingStatus()
 	<-sc
+fmt.Println("I")
 }
 
 func login(line string) *Bot {
