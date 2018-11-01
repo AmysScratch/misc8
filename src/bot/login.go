@@ -91,9 +91,7 @@ func Main() {
 	}
 	DB = db
 	for _, cfg := range strings.Split(string(bcfgs), "\n") {
-		if bot := login(cfg); bot != nil {
-			Bots = append(Bots, bot)
-		}
+		Bots = append(Bots, login(cfg))
 	}
 	if len(Bots) < 1 {
 		panic("No bots")
@@ -127,7 +125,7 @@ func login(line string) *Bot {
 	for _, kvws := range strings.Split(line, ";") {
 		kv := strings.Split(strings.TrimSpace(kvws), "=")
 		if len(kv) != 2 {
-			return nil
+			panic("len(kv) != 2")
 		}
 		switch strings.ToLower(kv[0]) {
 		case "owner":
@@ -140,15 +138,15 @@ func login(line string) *Bot {
 			bot.Session = session
 		}
 	}
-	if bot.Session != nil {
-		user, err := bot.Session.User("@me")
-		if err != nil {
-			panic("Could not resolve @me")
-		}
-		bot.User = user
-		return bot
+	if bot.Session == nil {
+		panic("bot.Session == nil")
 	}
-	return nil
+	user, err := bot.Session.User("@me")
+	if err != nil {
+		panic("Could not resolve @me")
+	}
+	bot.User = user
+	return bot
 }
 
 func cyclePlayingStatus() {
