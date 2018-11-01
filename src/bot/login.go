@@ -14,19 +14,24 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-var Playing = []string{
-	"Stay Alive Today"
+var PlayingFrequent = []string{
+	"Prefix is , (comma)"
+	"Try ,help"
+}
+
+var PlayingInfrequent = []string{
+	"Stay alive today",
 }
 
 var PlayingMonth = [12][]string{
 	{
-		"it's January",
+		"It's January",
 	},
 	{
 		"Happy ForeverAlone's Day",
 	},
 	{
-		"it's March",
+		"It's March",
 	},
 	{
 		"AoT S3p2 coming out",
@@ -38,13 +43,13 @@ var PlayingMonth = [12][]string{
 		"Happy Pride!",
 	},
 	{
-		"it's July",
+		"It's July",
 	},
 	{
-		"it's August",
+		"It's August",
 	},
 	{
-		"it's September",
+		"It's September",
 	},
 	{
 		"Happy Halloween!",
@@ -150,6 +155,13 @@ func cyclePlayingStatus() {
 		}
 		time.Sleep(10 * time.Second)
 
+		for _, playing := range PlayingFrequent {
+			for _, bot := range Bots {
+				bot.Session.UpdateStatus(0, playing)
+			}
+			time.Sleep(10 * time.Second)
+		}
+
 		for _, playing := range PlayingMonth[month] {
 			for _, bot := range Bots {
 				bot.Session.UpdateStatus(0, playing)
@@ -157,7 +169,14 @@ func cyclePlayingStatus() {
 			time.Sleep(10 * time.Second)
 		}
 
-		for _, playing := range Playing {
+		for _, playing := range PlayingInfrequent {
+			for _, bot := range Bots {
+				bot.Session.UpdateStatus(0, playing)
+			}
+			time.Sleep(10 * time.Second)
+		}
+
+		for _, playing := range PlayingFrequent {
 			for _, bot := range Bots {
 				bot.Session.UpdateStatus(0, playing)
 			}
