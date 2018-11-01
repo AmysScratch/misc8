@@ -1,9 +1,8 @@
 package bot
 
 import (
-	"fmt" // TODO: DEBUG
-
 	"database/sql"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"os/signal"
@@ -15,8 +14,6 @@ import (
 	"github.com/bwmarrin/discordgo"
 	_ "github.com/mattn/go-sqlite3"
 )
-
-var _ = fmt.Println // TODO: DEBUG
 
 var PlayingFrequent = []string{
 	"Prefix is , (comma)",
