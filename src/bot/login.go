@@ -64,7 +64,7 @@ func Main() {
 	}
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
-	for bot := range Bots {
+	for _, bot := range Bots {
 		if err := bot.Session.Open(); err != nil {
 			panic(err)
 		}
