@@ -81,9 +81,11 @@ func Main() {
 	if err != nil {
 		panic(err)
 	}
-	if DB, err := sql.Open("sqlite3", "/usr/local/Sa" + "sa8/Assets/Sa" + "sa8.db"); err != nil {
+	db, err := sql.Open("sqlite3", "/usr/local/Sa" + "sa8/Assets/Sa" + "sa8.db"); err != nil {
+	if err != nil {
 		panic(err)
 	}
+	DB = db
 	for _, cfg := range strings.Split(string(bcfgs), "\n") {
 		Bots = append(Bots, login(cfg))
 	}
