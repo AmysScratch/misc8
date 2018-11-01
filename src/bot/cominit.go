@@ -12,12 +12,6 @@ const (
 	Com_,
 )
 
-var PRG *rand.Rand
-
-func init() {
-	PRG = rand.New(rand.NewSource(time.Now().UnixNano()))
-}
-
 type Com struct {
 	Nick     string
 	Username string
@@ -73,5 +67,8 @@ func (com *Com) Init(s *discordgo.Session, message *discordgo.Message, payl stri
 	return nil
 }
 
-func (com *Com) Lex() error {
+var PRG *rand.Rand
+
+func init() {
+	PRG = rand.New(rand.NewSource(time.Now().UnixNano()))
 }
